@@ -1,6 +1,5 @@
 ﻿using Domain.IRepositories;
 using Domain.WeatherForecasts;
-using Domain.Weathers;
 using Infrastructure.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 

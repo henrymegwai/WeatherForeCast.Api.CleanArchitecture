@@ -1,5 +1,5 @@
 ﻿
-using Domain.Weathers;
+using Domain.WeatherForecasts;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 

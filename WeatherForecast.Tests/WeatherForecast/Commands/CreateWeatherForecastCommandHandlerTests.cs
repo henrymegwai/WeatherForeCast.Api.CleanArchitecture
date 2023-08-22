@@ -107,7 +107,7 @@ namespace Application.Commands
             var handlerResult = await handler.Handle(commandeRequest, default);
 
             //Assert
-            handler.Should().BeOfType<WeatherForecastResponse>();
+            handlerResult.Should().BeOfType<WeatherForecastResponse>();
         }
     }
 

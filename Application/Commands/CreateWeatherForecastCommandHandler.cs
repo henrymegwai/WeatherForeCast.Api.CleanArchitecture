@@ -4,22 +4,15 @@ using Application.Mapper;
 using Domain.Exceptions;
 using Domain.IRepositories;
 using Domain.WeatherForecasts;
-using Domain.Weathers;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Commands
 {
 
     public class CreateWeatherForecastCommandHandler : IRequestHandler<CreateWeatherForecastCommand, WeatherForecastResponse>
     {
-            private const int MinimumTemperature = -60;
+        private const int MinimumTemperature = -60;
         private const int MaximumTemperature = 60;
         private readonly ILogger<CreateWeatherForecastCommandHandler> _logger;
         private readonly IWeatherForecastRepository _weatherForecastRepository;
@@ -54,7 +47,7 @@ namespace Application.Commands
             await _weatherForecastRepository.Add(newWeatherforecast);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-            _logger.LogInformation($"WeatherForecast with was created successfully", JsonConvert.SerializeObject(request));
+            _logger.LogInformation($"WeatherForecast with was created successfully");
             return newWeatherforecast.Map();
         }
     }
