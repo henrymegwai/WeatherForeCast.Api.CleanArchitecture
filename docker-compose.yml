@@ -1,0 +1,39 @@
+version: "3.4"
+
+networks:
+  netapi-newtwork:
+    driver: bridge
+
+services:
+  weatherforecast_db:
+    container_name: weatherforecast_db
+    image: postgres
+    environment:
+      - POSTGRES_DB=weatherforecast
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    restart: always
+    volumes:
+      - weatherforecast_data:/var/lib/postgresql/data/
+    networks:
+      - netapi-newtwork
+
+  weatherforecast.api:
+    image: ${DOCKER_REGISTRY-}webapi
+    depends_on:
+      - "weatherforecast_db"
+    container_name: weatherforecast-api
+    ports:
+      - "8088:83"
+    build:
+      context: .
+      dockerfile: src/Presentation.Api/Dockerfile
+    environment:
+      - DatabaseConnection=User ID=postgres;Password=postgres;Host=weatherforecast_db;Port=5432;Database=weatherforecast
+    networks:
+      - netapi-newtwork
+
+volumes:
+  weatherforecast_data:
