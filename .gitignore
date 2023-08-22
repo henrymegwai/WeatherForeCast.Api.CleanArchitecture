@@ -36,6 +36,7 @@ Domain/obj/
 Infrastructure/obj/
 Presentation.Api/obj/
 WeatherForecast.Tests/obj/
+.containers/
 
 # Visual Studio 2015 cache/options directory
 .vs/
