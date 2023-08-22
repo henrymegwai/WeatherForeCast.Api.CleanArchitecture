@@ -1,5 +1,4 @@
 ﻿using Application.Dtos;
-using Domain.WeatherForecasts;
 using MediatR; 
 
 namespace Application.Queries

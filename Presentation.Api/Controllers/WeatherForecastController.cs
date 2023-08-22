@@ -1,6 +1,7 @@
 using Application.Commands;
 using Application.Dtos;
 using Application.Queries;
+using Application.Utilities;
 using Domain.Exceptions;
 using Domain.WeatherForecasts;
 using MediatR;
@@ -40,7 +41,8 @@ namespace Presentation.Api.Controllers
             }
         }
 
-        [HttpPost] 
+        [HttpPost]
+        [ProducesResponseType(statusCode: 200, type: typeof(WeatherForecastResponse))]
         public async Task<IActionResult> Post([FromBody] CreateWeatherForecastCommand commandRequest)
         {
             try
@@ -55,6 +57,22 @@ namespace Presentation.Api.Controllers
             }
            
 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet("search/{searchquery}/{sortBy}/{pageNumber}/{pageSize}")]
+        [ProducesResponseType(statusCode: 200, type: typeof(PaginatedList<WeatherForecastResponse>))]
+        public IActionResult SearchV2(string searchquery, string sortBy = "summary", int pageNumber = 1, int pageSize = 20)
+        {
+
+            var filterRequest = new FilterWeatherForecastQuery(searchquery, currentFilter: "1week", sortBy, pageNumber, pageSize);
+            var rssFeedPaginated = _mediator.Send(filterRequest);
+            return Ok(rssFeedPaginated);
         }
     }
 }
