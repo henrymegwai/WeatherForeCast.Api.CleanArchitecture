@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries
 {
-    internal class FilterWeatherForecastQueryHandler : IRequestHandler<FilterWeatherForecastQuery, PaginatedList<WeatherForecastResponse>>
+    internal class FilterWeatherForecastQueryHandler : IRequestHandler<FilterWeatherForecastQuery, PaginatedList<WeatherForecastFilterQueryResponse>>
     {
         private readonly IApplicationDbContext _context;
         private readonly ILogger<FilterWeatherForecastQueryHandler> _logger;
@@ -21,31 +21,30 @@ namespace Application.Queries
             _logger = logger;
         }
 
-        public async Task<PaginatedList<WeatherForecastResponse>> Handle(FilterWeatherForecastQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedList<WeatherForecastFilterQueryResponse>> Handle(FilterWeatherForecastQuery request, CancellationToken cancellationToken)
         {
-
             var weatherForecasts =  _context.WeatherForecasts.AsQueryable();
-            string query = request.searchquery;
-            query = string.IsNullOrEmpty(query) ? request.currentFilter : query;
-
-            weatherForecasts = query == request.currentFilter ? weatherForecasts : weatherForecasts.Where(p => p.Summary.Contains(query));
-
-            WeatherForecastSortOrder sortOrder = string.IsNullOrEmpty(request.sortBy) ? WeatherForecastSortOrder.date_asc : request.sortBy.ToEnum<WeatherForecastSortOrder>();
-           
-            switch (sortOrder)
-            { 
-                
-                case WeatherForecastSortOrder.date_asc:
-                    weatherForecasts = weatherForecasts.OrderBy(x => x.Date);
+            Weeks filterInWeeks = request.filterInWeeks.ToEnum<Weeks>();
+            var date = DateTime.Now;
+            switch (filterInWeeks)
+            {
+                case Weeks.Oneweek:
+                    weatherForecasts = weatherForecasts.Where(x=> x.Date >= date && x.Date <= date.AddDays(7));
                     break;
-                case WeatherForecastSortOrder.date_desc:
-                    weatherForecasts = weatherForecasts.OrderByDescending(x => x.Date);
+                case Weeks.Twoweeks:
+                    weatherForecasts = weatherForecasts.Where(x => x.Date >= date && x.Date <= date.AddDays(14));
+                    break;
+                case Weeks.Threeweeks:
+                    weatherForecasts = weatherForecasts.Where(x => x.Date >= date && x.Date <= date.AddDays(21));
+                    break;
+                case Weeks.Fourweeks:
+                    weatherForecasts = weatherForecasts.Where(x => x.Date >= date && x.Date <= date.AddDays(28));
                     break;
             }
-
-            var filteredResult = await weatherForecasts.Select(x => x.Map()).ToListAsync();
-
-            PaginatedList<WeatherForecastResponse> paginatedResults = PaginatedList<WeatherForecastResponse>.CreateAsync(filteredResult, request.pageNumber, request.pageSize);
+            
+            var filteredResults = await weatherForecasts.Select(x => x.MapFilter()).ToListAsync();
+           
+           var paginatedResults = PaginatedList<WeatherForecastFilterQueryResponse>.CreateAsync(filteredResults, request.pageNumber, request.pageSize);
 
             return paginatedResults;
         }

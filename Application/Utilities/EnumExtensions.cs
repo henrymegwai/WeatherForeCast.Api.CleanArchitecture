@@ -19,5 +19,17 @@ namespace Application.Utilities
                 return default(T);
             }
         }
+        public static T ToEnum<T>(this int value) where T : struct
+        {
+            string Value = value.ToString();
+            if (Enum.TryParse(Value, out T result))
+            {
+                return result;
+            }
+            else
+            {
+                return default(T);
+            }
+        }
     }
 }

@@ -10,8 +10,7 @@ namespace Application.Commands
 {
     public class CreateWeatherForecastCommandHandlerTests 
     {
-            private const int MinimumTemperature = -60;
-        private const int MaximumTemperature = 60;
+        
         private readonly Mock<ILogger<CreateWeatherForecastCommandHandler>> _loggerMock;
         private readonly Mock<IWeatherForecastRepository> _weatherForecastRepositoryMock;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
