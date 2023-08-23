@@ -1,6 +1,6 @@
 # WeatherForeCast.Api.CleanArchitecture
 
-This is a .Net WeatherForecast WebApi(C#) using Clean Code or Onion layered Architecture design, DDD, Mediatr, and CQRS partner.
+This is a .Net WeatherForecast WebApi(C#) with Postgre Database using Clean Code or Onion layered Architecture design, DDD, Mediatr, and CQRS partner.
 
 - Open your command line, cd into the root application folder, run docker-compose build, docker-compose up to test.
 
