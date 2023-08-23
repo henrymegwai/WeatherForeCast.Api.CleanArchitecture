@@ -25,7 +25,7 @@ namespace Application.Queries
         {
             var weatherForecasts =  _context.WeatherForecasts.AsQueryable();
             Weeks filterInWeeks = request.filterInWeeks.ToEnum<Weeks>();
-            var date = DateTime.Now;
+            var date = DateTime.UtcNow;
             switch (filterInWeeks)
             {
                 case Weeks.Oneweek:

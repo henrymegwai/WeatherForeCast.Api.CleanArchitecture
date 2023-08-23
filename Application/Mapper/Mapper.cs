@@ -18,7 +18,9 @@ namespace Application.Mapper
             return new WeatherForecastFilterQueryResponse
             {
                 temperatureInCentrigrade = model.TemperatureC,
-                Summary = model.Summary 
+                Summary = model.Summary, 
+                date = model.Date.ToString("ddd, dd MMMM yyyy")
+
             };
         }
     }

@@ -17,5 +17,6 @@ namespace Application.Dtos
     { 
         public int temperatureInCentrigrade { get; set; }
         public string Summary { get; set; } = string.Empty;
+        public string date { get; set; } = string.Empty;
     }
 }
