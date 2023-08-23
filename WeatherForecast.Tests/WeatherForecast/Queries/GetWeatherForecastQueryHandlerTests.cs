@@ -25,7 +25,7 @@ namespace WeatherForecast.Tests.WeatherForecast.Queries
         }
          
         [Fact]
-        public async Task Handle_Should_Not_Create_NewWeatherForecast_But_Throw_TemperatureTooLowException_When_Temperature_Imputed_IsBelow_Minus60()
+        public async Task Handle_Should_Get_WeatherForecast_By_Id()
         { 
 
         }

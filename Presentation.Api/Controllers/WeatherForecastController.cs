@@ -19,13 +19,13 @@ namespace Presentation.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{weatherId}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(statusCode: 200, type: typeof(WeatherForecastResponse))]
-        public async Task<IActionResult> Get(Guid weatherId)
+        public async Task<IActionResult> Get(Guid id)
         {
             try
             {
-                var queryRequest = new GetWeatherForecastByIdQuery(weatherId);
+                var queryRequest = new GetWeatherForecastByIdQuery(id);
                 var response = await _mediator.Send(queryRequest);
                 return Ok(response);
             }
@@ -56,7 +56,7 @@ namespace Presentation.Api.Controllers
          
         [HttpGet("{filterInWeeks}/{pageNumber}/{pageSize}")]
         [ProducesResponseType(statusCode: 200, type: typeof(PaginatedList<WeatherForecastFilterQueryResponse>))]
-        public async Task<IActionResult> SearchV2(Weeks filterInWeeks, int pageNumber = 1, int pageSize =20)
+        public async Task<IActionResult> Search(Weeks filterInWeeks, int pageNumber = 1, int pageSize =20)
         {
 
             var filterRequest = new FilterWeatherForecastQuery((int)filterInWeeks,pageNumber, pageSize);
