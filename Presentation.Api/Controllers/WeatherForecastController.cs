@@ -3,7 +3,6 @@ using Application.Dtos;
 using Application.Queries;
 using Application.Utilities;
 using Domain.Exceptions;
-using Domain.WeatherForecasts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +12,6 @@ namespace Presentation.Api.Controllers
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly IMediator _mediator;
 
         public WeatherForecastController(IMediator mediator)
@@ -25,13 +19,13 @@ namespace Presentation.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{weatherId}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(statusCode: 200, type: typeof(WeatherForecastResponse))]
-        public async Task<IActionResult> Get(Guid weatherId)
+        public async Task<IActionResult> Get(Guid id)
         {
             try
             {
-                var queryRequest = new GetWeatherForecastByIdQuery(weatherId);
+                var queryRequest = new GetWeatherForecastByIdQuery(id);
                 var response = await _mediator.Send(queryRequest);
                 return Ok(response);
             }
@@ -59,20 +53,15 @@ namespace Presentation.Api.Controllers
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pageNumber"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        [HttpGet("search/{searchquery}/{sortBy}/{pageNumber}/{pageSize}")]
-        [ProducesResponseType(statusCode: 200, type: typeof(PaginatedList<WeatherForecastResponse>))]
-        public IActionResult SearchV2(string searchquery, string sortBy = "summary", int pageNumber = 1, int pageSize = 20)
+         
+        [HttpGet("{filterInWeeks}/{pageNumber}/{pageSize}")]
+        [ProducesResponseType(statusCode: 200, type: typeof(PaginatedList<WeatherForecastFilterQueryResponse>))]
+        public async Task<IActionResult> Search(Weeks filterInWeeks, int pageNumber = 1, int pageSize =20)
         {
 
-            var filterRequest = new FilterWeatherForecastQuery(searchquery, currentFilter: "1week", sortBy, pageNumber, pageSize);
-            var rssFeedPaginated = _mediator.Send(filterRequest);
-            return Ok(rssFeedPaginated);
+            var filterRequest = new FilterWeatherForecastQuery((int)filterInWeeks,pageNumber, pageSize);
+            var filterPaginatedResponse = await _mediator.Send(filterRequest);
+            return Ok(filterPaginatedResponse);
         }
     }
 }

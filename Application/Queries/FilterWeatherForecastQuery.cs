@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Application.Queries
 {
-    public record FilterWeatherForecastQuery(string searchquery, string currentFilter, string sortBy, int pageNumber, int pageSize) : IRequest<PaginatedList<WeatherForecastResponse>>;
+    public record FilterWeatherForecastQuery(int filterInWeeks, int pageNumber, int pageSize) : IRequest<PaginatedList<WeatherForecastFilterQueryResponse>>;
 }

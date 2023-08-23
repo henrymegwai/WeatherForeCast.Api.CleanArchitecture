@@ -12,5 +12,11 @@ namespace Application.Dtos
         DateTime date, 
         int temperatureInCentrigrade, 
         string summary);
-    
+
+    public class WeatherForecastFilterQueryResponse 
+    { 
+        public int temperatureInCentrigrade { get; set; }
+        public string Summary { get; set; } = string.Empty;
+        public string date { get; set; } = string.Empty;
+    }
 }
