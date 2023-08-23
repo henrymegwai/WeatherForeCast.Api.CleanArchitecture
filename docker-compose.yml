@@ -12,12 +12,14 @@ services:
     container_name: weatherforecast-api
     ports:
       - "8088:83"
+      - "443"
     build:
       context: .
       dockerfile: Presentation.Api/Dockerfile
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings__DatabaseConnection=host=weatherforecast_db;Port=5432;Database=weatherforecast;User Id=admin;Password=admin;"
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "ConnectionStrings__DatabaseConnection=Host=weatherforecast_db;Port=5432;Database=weatherforecastDB;User ID=postgres;Password=postgres;Pooling=true;Include Error Detail=true"
 
   weatherforecast_db:
     image: postgres
@@ -30,7 +32,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=weatherforecast
     volumes:
-      - weatherforecast_data:/var/lib/postgresql/data/
+      - weather-data:/var/lib/postgresql/data/
 
   pgadmin:
     container_name: pgadmin4_container
@@ -49,5 +51,5 @@ services:
       - netapi-newtwork
 
 volumes:
-  weatherforecast_data:
+  weather-data:
   pgadmin-data:
