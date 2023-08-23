@@ -47,7 +47,7 @@ namespace Application.Commands
             await _weatherForecastRepository.Add(newWeatherforecast);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-            _logger.LogInformation($"WeatherForecast with was created successfully");
+            _logger.LogInformation($"WeatherForecast with id {newWeatherforecast.Id} was created successfully");
             return newWeatherforecast.Map();
         }
     }
