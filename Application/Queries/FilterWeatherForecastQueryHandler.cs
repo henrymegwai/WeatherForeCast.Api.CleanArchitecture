@@ -41,12 +41,10 @@ namespace Application.Queries
                     weatherForecasts = weatherForecasts.Where(x => x.Date >= date && x.Date <= date.AddDays(28));
                     break;
             }
-            
-            var filteredResults = await weatherForecasts.Select(x => x.MapFilter()).ToListAsync();
-           
-           var paginatedResults = PaginatedList<WeatherForecastFilterQueryResponse>.CreateAsync(filteredResults, request.pageNumber, request.pageSize);
+             
+           var weatherForcasts = PaginatedList<WeatherForecastFilterQueryResponse>.CreateAsync(weatherForecasts.Select(x => x.MapFilter()), request.pageNumber, request.pageSize);
 
-            return paginatedResults;
+            return weatherForcasts;
         }
     }
 }
