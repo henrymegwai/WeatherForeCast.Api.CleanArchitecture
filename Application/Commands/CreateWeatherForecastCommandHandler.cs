@@ -6,6 +6,7 @@ using Domain.IRepositories;
 using Domain.WeatherForecasts;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.Metrics;
 
 namespace Application.Commands
 {
