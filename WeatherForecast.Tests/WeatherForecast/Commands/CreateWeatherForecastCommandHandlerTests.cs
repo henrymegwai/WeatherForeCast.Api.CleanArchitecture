@@ -22,7 +22,7 @@ namespace Application.Commands
         }
 
         [Fact]
-        public async Task Handle_Should_Not_Create_NewWeatherForecast_But_Throw_TemperatureTooLowException_When_Temperature_Imputed_IsBelow_Minus60()
+        public async Task CreateWeatherForecast_Handler_Should_Throw_TemperatureIsTooLowException_When_Temperature_IsBelow_60Degrees()
         {
             //Arrange
             int temperature = -61;
@@ -40,12 +40,12 @@ namespace Application.Commands
 
             //Assert
             var exceptionAssertion = await handlerResult.Should().ThrowAsync<TemperatureTooLowException>();
-            exceptionAssertion.And.Message.Should().Be($"The WeatherForecast temperature {temperature} must be less that -60 degrees");
+            exceptionAssertion.And.Message.Should().Be($"The WeatherForecast temperature {temperature} must be less than -60 degrees");
             
         }
 
         [Fact]
-        public async Task Handle_Should_Not_Create_NewWeatherForecast_But_Throw_TemperatureTooHighException_When_Temperature_Imputed_IsBelow_Minus60()
+        public async Task CreateWeatherForecast_Handler_Should_Throw_TemperatureIsTooHighException_When_Temperature_IsAbove_60Degrees()
         {
             //Arrange
             int temperature = 61;
