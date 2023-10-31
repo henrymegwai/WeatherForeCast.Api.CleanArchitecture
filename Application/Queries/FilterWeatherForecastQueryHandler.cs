@@ -42,7 +42,7 @@ namespace Application.Queries
                     break;
             }
              
-           var weatherForcasts = PaginatedList<WeatherForecastFilterQueryResponse>.CreateAsync(weatherForecasts.Select(x => x.MapFilter()), request.pageNumber, request.pageSize);
+           var weatherForcasts = await PaginatedList<WeatherForecastFilterQueryResponse>.CreateAsync(weatherForecasts.Select(x => x.MapFilter()), request.pageNumber, request.pageSize);
 
             return weatherForcasts;
         }
