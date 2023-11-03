@@ -11,5 +11,6 @@ This is a .Net WeatherForecast WebApi(C#) with Postgre Database using Clean Code
 ![image](https://github.com/henrymegwai/WeatherForeCast.Api.CleanArchitecture/assets/4582442/ce302c8d-af98-4ca2-bba0-71da8f6a2f50)
 
 
+![image](https://github.com/henrymegwai/WeatherForeCast.Api.CleanArchitecture/assets/4582442/f85b8501-0dd4-4b92-8656-0c88cf7b46cd)
 
-![image](https://github.com/henrymegwai/WeatherForeCast.Api.CleanArchitecture/assets/4582442/52ebee41-3bc1-480d-81b4-76d31e5a62ed)
+
